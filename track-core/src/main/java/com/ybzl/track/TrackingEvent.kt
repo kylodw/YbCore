@@ -12,16 +12,16 @@ import java.util.concurrent.ConcurrentHashMap
 
 sealed class TrackingEvent(@Transient val eventCode: String) {
     fun toJson(): String = TrackingManager.gson.toJson(this)
-    private val parameters: ConcurrentHashMap<String, Any> = ConcurrentHashMap()
+    private val parameters: ConcurrentHashMap<String, Any?> = ConcurrentHashMap()
 
     @Transient
     val timestamp: Long = System.currentTimeMillis()
 
-    fun put(key: String, value: Any) {
+    fun put(key: String, value: Any?) {
         parameters[key] = value
     }
 
-    fun put(map: Map<String, Any>) {
+    fun put(map: Map<String, Any?>) {
         parameters.putAll(map)
     }
 
