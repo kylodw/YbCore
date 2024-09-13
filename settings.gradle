@@ -25,3 +25,4 @@
 rootProject.name = "YbCore"
 include ':app'
 include ':track-core'
+include ':network-core'
