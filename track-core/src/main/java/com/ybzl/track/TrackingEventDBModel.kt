@@ -39,6 +39,9 @@ interface TrackingEventDBModelDao {
     // 新增查询，获取所有唯一的 eventCode
     @Query("SELECT DISTINCT eventCode FROM tracking_event_model")
     fun getAllEventCodes(): List<String>
+
+    @Query("delete from tracking_event_model")
+    suspend fun clearEvent()
 }
 
 @Database(
@@ -89,5 +92,10 @@ abstract class TrackingEventDataBase : RoomDatabase() {
         }
     }
 
+    suspend fun clearEvent(){
+        return withTransaction {
+            trackingEventDao().clearEvent()
+        }
+    }
 
 }

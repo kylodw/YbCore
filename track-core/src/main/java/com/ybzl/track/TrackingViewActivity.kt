@@ -27,6 +27,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,7 +41,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
+import com.yuyh.jsonviewer.library.JsonRecyclerView
 
 class TrackingViewActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -56,6 +59,12 @@ class TrackingViewActivity : ComponentActivity() {
                         finish()
                     }) {
                         Image(Icons.Default.ArrowBack, contentDescription = "返回")
+                    }
+                }, actions = {
+                    TextButton(onClick = {
+                        TrackingManager.clearEvent()
+                    }) {
+                        Text(text = "清空日志")
                     }
                 })
                 TrackingViewScreen()
@@ -125,7 +134,11 @@ class TrackingViewActivity : ComponentActivity() {
                     items(pageList) {
                         Column {
                             Text(text = it.eventCode)
-                            Text(text = it.json)
+                            AndroidView(factory = { context ->
+                                val jsonRecyclerView = JsonRecyclerView(context)
+                                jsonRecyclerView.bindJson(it.json)
+                                jsonRecyclerView
+                            })
                             HorizontalDivider()
                         }
                     }

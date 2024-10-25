@@ -41,10 +41,16 @@ object TrackingManager {
     }
 
     suspend fun queryEventCode(eventCode: String?): List<TrackingEventDBModel> {
-        if(eventCode==null)return emptyList()
+        if (eventCode == null) return emptyList()
         return TrackingEventDataBase.getInstance(context).trackingEventDao()
             .queryEventCode(eventCode) ?: emptyList()
     }
 
+    fun clearEvent() {
+        coroutineScope.launch {
+            TrackingEventDataBase.getInstance(context).clearEvent()
+        }
+
+    }
 
 }
