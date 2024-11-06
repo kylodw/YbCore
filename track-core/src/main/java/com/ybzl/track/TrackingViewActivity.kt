@@ -41,9 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
-import com.yuyh.jsonviewer.library.JsonRecyclerView
 
 class TrackingViewActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -134,11 +132,11 @@ class TrackingViewActivity : ComponentActivity() {
                     items(pageList) {
                         Column {
                             Text(text = it.eventCode)
-                            AndroidView(factory = { context ->
-                                val jsonRecyclerView = JsonRecyclerView(context)
-                                jsonRecyclerView.bindJson(it.json)
-                                jsonRecyclerView
-                            })
+//                            AndroidView(factory = { context ->
+//                                val jsonRecyclerView = JsonRecyclerView(context)
+//                                jsonRecyclerView.bindJson(it.json)
+//                                jsonRecyclerView
+//                            })
                             HorizontalDivider()
                         }
                     }

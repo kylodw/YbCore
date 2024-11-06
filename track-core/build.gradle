@@ -35,7 +35,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17
     }
-
 }
 
 
@@ -53,6 +52,6 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.okhttp)
     kapt(libs.room.compiler)
-    implementation 'com.github.smuyyh:JsonViewer:1.0.7'
+//    implementation 'com.github.smuyyh:JsonViewer:1.0.7'
 }
 apply from: rootProject.file("gradle/maven-publish.gradle")
