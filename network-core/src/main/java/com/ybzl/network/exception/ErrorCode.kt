@@ -2,6 +2,7 @@ package com.ybzl.network.exception
 
 object ErrorCode {
     const val SUCCESS_CODE=200
+    const val SUCCESS_CODE_0=0
     const val NO_LOGIN_CODE=401
     const val NETWORK_ERROR_CODE=100000
     const val CANCELLATION_EX_CODE=100001

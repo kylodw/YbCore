@@ -26,13 +26,12 @@ suspend fun <T : AResponseModelFix<*>> safeApiCallFix(
             call.invoke()
         }
         when (result.code) {
-            ErrorCode.SUCCESS_CODE -> {
+            ErrorCode.SUCCESS_CODE, ErrorCode.SUCCESS_CODE_0 -> {
                 onSuccess?.invoke(result)
                 BaseResult.success(result)
             }
 
             ErrorCode.NO_LOGIN_CODE -> {
-
                 BaseResult.failure(AppException.NoLoginException)
             }
 
