@@ -25,31 +25,30 @@ import kotlinx.coroutines.launch
 /**
  * @suppress
  */
-class BroadcastEventBus<T> : EventListenable<T> {
-    private val mutableEvents = MutableSharedFlow<T>(extraBufferCapacity = Int.MAX_VALUE)
+object BroadcastEventBus : EventListenable<Event> {
+    private val mutableEvents = MutableSharedFlow<Event>(extraBufferCapacity = Int.MAX_VALUE)
     override val events = mutableEvents.asSharedFlow()
 
-    suspend fun postEvent(event: T) {
+    suspend fun postEvent(event: Event) {
         mutableEvents.emit(event)
     }
 
-    fun tryPostEvent(event: T) {
+    fun tryPostEvent(event: Event) {
         mutableEvents.tryEmit(event)
     }
 
-    fun postEvent(event: T, scope: CoroutineScope): Job {
+    fun postEvent(event: Event, scope: CoroutineScope): Job {
         return scope.launch { postEvent(event) }
     }
 
-    suspend fun postEvents(eventsToPost: Collection<T>) {
+    suspend fun postEvents(eventsToPost: Collection<Event>) {
         eventsToPost.forEach { event ->
             mutableEvents.emit(event)
         }
     }
 
-    fun postEvents(eventsToPost: Collection<T>, scope: CoroutineScope): Job {
+    fun postEvents(eventsToPost: Collection<Event>, scope: CoroutineScope): Job {
         return scope.launch { postEvents(eventsToPost) }
     }
 
-    fun readOnly(): EventListenable<T> = this
 }

@@ -63,13 +63,13 @@ class MQTTManager {
     ) {
         this.isDebug = isDebug
         val mqttCallback: MqttCallbackExtended = object : MqttCallbackExtended {
-            override fun connectComplete(reconnect: Boolean, serverURI: String) {
+            override fun connectComplete(reconnect: Boolean, serverURI: String?) {
                 //连接成功
                 log("连接成功")
                 updateConnectState(YbMessageBusChannel.ConnectState.CONNECTED)
             }
 
-            override fun connectionLost(cause: Throwable) {
+            override fun connectionLost(cause: Throwable?) {
                 log("断开连接")
                 //断开连接
                 updateConnectState(YbMessageBusChannel.ConnectState.DISCONNECT)
@@ -77,11 +77,11 @@ class MQTTManager {
             }
 
             @Throws(Exception::class)
-            override fun messageArrived(topic: String, message: MqttMessage) {
+            override fun messageArrived(topic: String, message: MqttMessage?) {
                 log(topic, message)
                 //得到的消息
                 mainScope.launch {
-                    val msg = message.payload?.toString(Charset.defaultCharset()) ?: ""
+                    val msg = message?.payload?.toString(Charset.defaultCharset()) ?: ""
                     if (topic.contains("screen/setControl")) {
                         val actionMessage = GsonUtils.fromJson(msg, ActionMessage::class.java)
                         val ip = NetworkUtils.getIPAddress(true)
@@ -98,7 +98,7 @@ class MQTTManager {
 
             }
 
-            override fun deliveryComplete(token: IMqttDeliveryToken) {
+            override fun deliveryComplete(token: IMqttDeliveryToken?) {
                 //发送消息成功后的回调
             }
         }

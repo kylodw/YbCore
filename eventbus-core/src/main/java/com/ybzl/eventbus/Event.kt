@@ -16,4 +16,4 @@
 
 package com.ybzl.eventbus
 
-sealed class Event
+interface Event

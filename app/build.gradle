@@ -40,4 +40,6 @@ dependencies {
     implementation(project(":eventbus-core"))
     implementation(project(":network-core"))
     implementation(project(":track-core"))
+    implementation libs.material
+    implementation libs.androidx.constraintlayout
 }
