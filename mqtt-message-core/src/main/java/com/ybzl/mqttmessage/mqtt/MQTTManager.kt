@@ -213,7 +213,7 @@ class MQTTManager {
         return MqttConnectOptions().apply {
             isAutomaticReconnect = true  // 自动重连
             isCleanSession = false       // 保持会话
-            if (userName.isNullOrEmpty().not() && mPasswd.isNullOrEmpty().not()) {
+            if (mUserName.isNullOrEmpty().not() && mPasswd.isNullOrEmpty().not()) {
                 userName = mUserName
                 password = mPasswd?.toCharArray()
             }
