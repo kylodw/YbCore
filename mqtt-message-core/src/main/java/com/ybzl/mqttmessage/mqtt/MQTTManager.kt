@@ -31,10 +31,13 @@ import java.nio.charset.Charset
 class MQTTManager {
     private val CHANNEL_ID = "YbMessageServiceChannel"
     private var mqttAndroidClient: MqttAndroidClient? = null
-    private val mClientId: String = DeviceUtils.getUniqueDeviceId(false).plus(System.currentTimeMillis())
+    private val mClientId: String =
+        DeviceUtils.getUniqueDeviceId(false).plus(System.currentTimeMillis())
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val mTopics = mutableMapOf<String, Int>()
     private var isDebug = false
+    private var mUserName: String? = null
+    private var mPasswd: String? = null
 
     companion object {
         @Volatile
@@ -53,15 +56,22 @@ class MQTTManager {
                 "医标通知服务",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
-            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val manager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.createNotificationChannel(serviceChannel)
         }
     }
 
     fun init(
-        context: Context, serviceUrl: String, isDebug: Boolean = false
+        context: Context,
+        serviceUrl: String,
+        userName: String? = null,
+        passwd: String? = null,
+        isDebug: Boolean = false
     ) {
         this.isDebug = isDebug
+        this.mUserName = userName
+        this.mPasswd = passwd
         val mqttCallback: MqttCallbackExtended = object : MqttCallbackExtended {
             override fun connectComplete(reconnect: Boolean, serverURI: String?) {
                 //连接成功
@@ -199,9 +209,14 @@ class MQTTManager {
     }
 
     private fun defaultOption(): MqttConnectOptions {
+
         return MqttConnectOptions().apply {
             isAutomaticReconnect = true  // 自动重连
             isCleanSession = false       // 保持会话
+            if (userName.isNullOrEmpty().not() && mPasswd.isNullOrEmpty().not()) {
+                userName = mUserName
+                password = mPasswd?.toCharArray()
+            }
         }
     }
 
