@@ -124,7 +124,7 @@ class MQTTManager {
 
     private fun connectMqtt(context: Context) {
         updateConnectState(YbMessageBusChannel.ConnectState.CONNECTING)
-        mqttAndroidClient?.connect(defaultOption(), object : IMqttActionListener {
+        mqttAndroidClient?.connect(defaultOption(), null, object : IMqttActionListener {
             override fun onSuccess(asyncActionToken: IMqttToken?) {
                 subScribe(false, *mTopics.map { Pair(it.key, it.value) }.toTypedArray())
                 updateConnectState(YbMessageBusChannel.ConnectState.CONNECTED)
