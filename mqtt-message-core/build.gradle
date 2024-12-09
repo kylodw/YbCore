@@ -9,7 +9,7 @@ android {
     compileSdk 35
 
     defaultConfig {
-        minSdk 21
+        minSdk 23
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -51,10 +51,11 @@ dependencies {
 
     //    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
 //    implementation 'com.github.hannesa2:paho.mqtt.android:3.6.5'
-    implementation 'com.github.hannesa2:paho.mqtt.android:4.2.3'
+//    implementation 'com.github.hannesa2:paho.mqtt.android:4.2.3'
 //    implementation libs.androidx.legacy.support.v4
-    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
+//    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
 //    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    implementation 'com.gitee.kouso:PeterMqtt:1.1.4'
     implementation 'com.blankj:utilcodex:1.31.1'
 }
 apply from: rootProject.file("gradle/maven-publish.gradle")
