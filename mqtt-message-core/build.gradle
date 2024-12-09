@@ -55,7 +55,7 @@ dependencies {
 //    implementation libs.androidx.legacy.support.v4
 //    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
 //    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
-    implementation 'com.gitee.kouso:PeterMqtt:1.1.4'
+    implementation 'com.gitee.kouso:PeterMqtt:1.1.5'
     implementation 'com.blankj:utilcodex:1.31.1'
 }
 apply from: rootProject.file("gradle/maven-publish.gradle")
